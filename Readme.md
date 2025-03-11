@@ -1,6 +1,6 @@
 # Tunable
 
-![Tunable Cover](./assets/cover.jpg)
+![Tunable Cover](./assets/cover-small.jpg)
 
 Tunable is an audio recognition system, similar to Shazam, that can accurately identify a song from an audio clip. So the next time you hear some audio and get curious to know which song it is, try Tunable!
 

@@ -4,12 +4,6 @@ import numpy as np
 
 song_filename = "./data/songs/saajna.mp3"
 
-def get_waveform(filename):
-
-    y,sr = librosa.load(filename)
-
-    return y
-
 def visualize_waveform(y):
 
     print(f'y : {y}')
@@ -26,6 +20,44 @@ def visualize_waveform(y):
     plt.ylabel('Amplitude')
     plt.show()
 
-y = get_waveform(song_filename)
+def get_interesting_points(y,sr,threshold=0.5):
+
+    amps = np.abs(y)
+    d_amps = np.diff(amps)
+    d_amps_abs = np.abs(d_amps)
+
+    interesting_points = np.where(d_amps_abs > threshold)[0]
+
+    timestamps = interesting_points / sr
+    
+    return timestamps
+
+def visualize_stft(y,sr):
+
+    stft = librosa.stft(y)
+    stft_abs = np.abs(stft)
+
+    spectrogram = librosa.amplitude_to_db(stft_abs, ref=np.max)
+
+    librosa.display.specshow(spectrogram, sr=sr, x_axis="time", y_axis="log")
+
+    plt.title('Spectrogram (STFT)')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Frequency (Hz)')
+    plt.show()
+
+def get_frequencies():
+    pass
+
+
+y,sr = librosa.load(song_filename)
+
 visualize_waveform(y)
+
+# timestamps = get_interesting_points(y,sr)
+
+# frequencies = get_frequencies()
+
+visualize_stft(y,sr)
+
 
